@@ -36,18 +36,18 @@ class Effects_ImageCarousel extends Widget_Base
   public function get_style_depends()
   {
     wp_register_style('effects-style', plugins_url('scss/effects.css', __FILE__));
-    wp_register_style('owl-style', plugins_url('scss/owl.theme.default.min.css', __FILE__));
+    wp_register_style('flickity-style', plugins_url('scss/flickity.css', __FILE__));
 
-    return ['effects-style', 'owl-style'];
+    return ['effects-style', 'flickity-style'];
   }
 
   public function get_script_depends()
   {
     wp_register_script('bootstrap-script', plugins_url('js/bootstrap.min.js', __FILE__));
-    wp_register_script('owl-script', plugins_url('js/owl.carousel.min.js', __FILE__));
+    wp_register_script('flickity-script', plugins_url('js/flickity.pkgd.min.js', __FILE__));
     wp_register_script('effects-script', plugins_url('js/effects.js', __FILE__));
 
-    return ['bootstrap-script', 'owl-script', 'effects-script'];
+    return ['bootstrap-script', 'flickity-script', 'effects-script'];
   }
 
   public function register_controls()
@@ -129,15 +129,17 @@ class Effects_ImageCarousel extends Widget_Base
     $list = $settings['list'];
 ?>
     <div class="effectsimagecarousel-area">
-      <div class="effectsimagecarousel owl-carousel">
+      <div class="effectsimagecarousel " style="height: 420px;">
 
         <?php
         if ($list) {
           foreach ($list as $index => $item) {
         ?>
-            <a href="<?php echo esc_url($item['link']['url']); ?>">
-              <div class="item">
-                <img src="<?php echo esc_url($item['list_image']['url']); ?>" alt="<?php echo $item['list_title']; ?>" class="effectscarouselimage">
+            <a href="<?php echo esc_url($item['link']['url']); ?>" class="cell-link" aria-hidden="true" style="position: absolute; left: 0px; transform: translateX(-100%);height: 100%;">
+              <div class="featured-categories-card" style="background-image:url('<?php echo esc_url($item['list_image']['url']); ?>'); height: 100%;margin-right: 15px;">
+                <div class="featured-categories-overlay d-flex align-items-end ps-4 pb-3" style="height: 100%;width: 300px; background: rgba(0, 0, 0, 0.4);">
+                  <h3 class="featured-categories-item-title" style="color:white;"> <?php echo $item['list_title']; ?>         </h3>
+                </div>
               </div>
             </a>
         <?php
@@ -165,3 +167,6 @@ class Effects_ImageCarousel extends Widget_Base
 <?php
   }
 }
+
+
+
